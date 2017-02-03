@@ -1,12 +1,9 @@
 from pymongo import MongoClient
 import csv       #facilitates CSV I/O
 
+server = MongoClient('127.0.0.1')
 
-
-f="discobandit.db"
-
-db = sqlite3.connect(f) #open if f exists, otherwise create
-c = db.cursor()    #facilitate db ops
+db = server.theMangoDB
 
 #==========================================================
 #INSERT YOUR POPULATE CODE IN THIS ZONE
@@ -15,14 +12,12 @@ c = db.cursor()    #facilitate db ops
 #db.close()
 
 
-q = "CREATE TABLE students (name TEXT, age INTEGER, id INTEGER)"
-c.execute(q)    #run SQL query
 fObj=open("peeps.csv")
 d=csv.DictReader(fObj)
 for k in d:
-    p = "INSERT INTO students VALUES (\""+k['name']+"\","+k['age']+","+k['id']+")"
-    c.execute(p)
-
+    dict = {}
+    dict += {'name': k['name'],'age' : k['age'], 'id':k['id']}
+# insert 
 fObj.close()
 
 
