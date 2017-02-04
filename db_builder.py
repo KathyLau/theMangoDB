@@ -13,11 +13,6 @@ d=csv.DictReader(open("courses.csv"))
 for k in d:
     db.courses.insert_one(k)
 
-'''
-Print out everything to make sure it works
-'''
-studentData = db.students.find()
-courseData = db.courses.find()
-for i in studentData: print i
-print '\n\n\n'
-for i in courseData: print i
+
+print db.students.count()
+print db.courses.count()
