@@ -2,37 +2,22 @@ from pymongo import MongoClient
 import csv       #facilitates CSV I/O
 
 server = MongoClient('127.0.0.1')
-
 db = server.theMangoDB
 
-#==========================================================
-#INSERT YOUR POPULATE CODE IN THIS ZONE
-#...perhaps by beginning with these examples...
 
-#db.close()
-
-
-fObj=open("peeps.csv")
-d=csv.DictReader(fObj)
+d=csv.DictReader(open("peeps.csv"))
 for k in d:
-    dict = {}
-    dict += {'name': k['name'],'age' : k['age'], 'id':k['id']}
-# insert 
-fObj.close()
+    db.students.insert_one(k)
 
-
-
-q = "CREATE TABLE courses (code TEXT, id INTEGER, mark INTEGER)"
-c.execute(q)
-fObj=open("courses.csv")
-d=csv.DictReader(fObj)
+d=csv.DictReader(open("courses.csv"))
 for k in d:
-    p = "INSERT INTO courses VALUES (\""+k['code']+"\","+k['id']+","+k['mark']+")"
-    c.execute(p)
+    db.courses.insert_one(k)
 
-fObj.close()
-
-
-#==========================================================
-db.commit() #save changes
-db.close()  #close database
+'''
+Print out everything to make sure it works
+'''
+studentData = db.students.find()
+courseData = db.courses.find()
+for i in studentData: print i
+print '\n\n\n'
+for i in courseData: print i
