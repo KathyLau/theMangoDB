@@ -1,18 +1,25 @@
 from pymongo import MongoClient
 import csv       #facilitates CSV I/O
 
-server = MongoClient('127.0.0.1')
+server = MongoClient('localhost')
 db = server.theMangoDB
 
+def listify(fname):
+    d = csv.DictReader(open(fname))
+    return [row for row in d]
 
-d=csv.DictReader(open("peeps.csv"))
-for k in d:
-    db.students.insert_one(k)
+def mongolify():
+    peeps=listify("peeps.csv")
+    courses=listify("courses.csv")
+    mainList = [] #to hold list of updated dictionaries
+    for peep in peeps:
+        courseD = {}
+        for course in courses:
+            if course['id'] == peep['id']: 
+                courseD[course['code']] = course['mark'] #store as {'course1':mark, etc}
+        peep['courses'] = courseD #add courses to student dictionary
+        mainList.append(peep)
+    db.students.insert_many(mainList)
 
-d=csv.DictReader(open("courses.csv"))
-for k in d:
-    db.courses.insert_one(k)
-
-
-print db.students.count()
-print db.courses.count()
+if db.students.count() == 0:
+    mongolify()
