@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from csv import DictReader       #facilitates CSV I/O
-server = MongoClient('localhost')
+server = MongoClient('149.89.150.100')
 db = server.theMangoDB
 
 if db.students.count() == 0:
