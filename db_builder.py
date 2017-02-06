@@ -1,3 +1,6 @@
+#Team 'TheMangoDB'
+#Kathy Lau, Felix Rieg-Baumhauer
+
 from pymongo import MongoClient
 from csv import DictReader       #facilitates CSV I/O
 server = MongoClient('149.89.150.100')
