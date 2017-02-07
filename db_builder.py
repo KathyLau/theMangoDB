@@ -16,3 +16,4 @@ if db.students.count() == 0:
                 courses[course['code']] = course['mark'] #store as {'course1':mark, etc}
         peep['courses'] = courses #add courses to student dictionary
         db.students.insert_one(peep)
+
