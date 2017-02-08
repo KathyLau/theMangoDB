@@ -13,7 +13,7 @@ for teacher in t:
 	students = db.students.find({'courses.code':teacher['code']})
 	s=[]
 	for stud in students:
-		s.append(stud['_id'])
+		s.append(stud['id'])
 	teacher['peeps'] = s
 	teacher['period'] = int(teacher['period'])
 	db.teachers.insert_one(teacher)
